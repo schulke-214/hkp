@@ -1,0 +1,24 @@
+# Gopkg.toml example
+#
+# Refer to https://golang.github.io/dep/docs/Gopkg.toml.html
+# for detailed Gopkg.toml documentation.
+#
+# required = ["github.com/user/thing/cmd/thing"]
+ 
+ignored = ["github.com/davecgh/go-spew"]
+
+[[constraint]]
+  name = "github.com/gin-gonic/gin"
+  version = "1.5.0"
+
+[prune]
+  go-tests = true
+  unused-packages = true
+
+[[constraint]]
+  name = "github.com/jinzhu/gorm"
+  version = "1.9.11"
+
+[[constraint]]
+  name = "github.com/mattn/go-sqlite3"
+  version = "2.0.2"
