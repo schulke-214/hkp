@@ -1,9 +1,8 @@
 package main
 
 import (
-	// "net/http"
-
 	"github.com/gin-gonic/gin"
+	_ "github.com/joho/godotenv/autoload"
 
 	"github.com/schulke-214/hkp/api"
 	"github.com/schulke-214/hkp/pkg/db"
@@ -11,8 +10,8 @@ import (
 
 func main() {
 	router := gin.Default()
-	api.RegisterCategories(router, "/categories")
+	api.RegisterCategories(router)
 	router.Run(":8080")
 
-	defer db.DB.Close()
+	defer db.Connection.Close()
 }
