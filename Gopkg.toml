@@ -7,18 +7,22 @@
  
 ignored = ["github.com/davecgh/go-spew"]
 
-[[constraint]]
-  name = "github.com/gin-gonic/gin"
-  version = "1.5.0"
 
 [prune]
   go-tests = true
   unused-packages = true
 
 [[constraint]]
+  name = "github.com/joho/godotenv"
+  version = "1.3.0"
+
+[[constraint]]
   name = "github.com/jinzhu/gorm"
   version = "1.9.11"
 
 [[constraint]]
-  name = "github.com/mattn/go-sqlite3"
-  version = "2.0.2"
+  name = "github.com/gin-gonic/gin"
+  version = "1.5.0"
+[[constraint]]
+  name = "github.com/google/uuid"
+  version = "1.1.1"
