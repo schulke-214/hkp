@@ -1,14 +1,12 @@
 package db
 
 import (
-	"fmt"
-
 	"github.com/jinzhu/gorm"
-	"github.com/schulke-214/hkp/pkg/domain/models"
+	_ "github.com/jinzhu/gorm/dialects/sqlite" // database driver for gorm
 
-	// database driver for gorm
-	_ "github.com/jinzhu/gorm/dialects/sqlite"
 	// _ "github.com/jinzhu/gorm/dialects/postgres"
+
+	"github.com/schulke-214/hkp/pkg/domain/models"
 )
 
 // DB is the database instance
@@ -22,7 +20,8 @@ func init() {
 	}
 
 	DB = db
-	fmt.Println("LOLS")
+
+	AutoMigrate()
 }
 
 // AutoMigrate provides bindings to db.AutoMigrate for all Models
