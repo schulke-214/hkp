@@ -49,7 +49,7 @@ func init() {
 		panic("failed to connect to the database")
 	}
 
-	db.AutoMigrate(&models.Category{})
+	db.AutoMigrate(&models.Task{}, &models.TaskEntry{})
 
 	Connection = db
 }
