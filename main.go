@@ -1,8 +1,11 @@
 package main
 
 import (
+
+	// autoconfigure the environment
+	_ "github.com/schulke-214/hkp/pkg/util/env"
+
 	"github.com/gin-gonic/gin"
-	_ "github.com/joho/godotenv/autoload"
 
 	"github.com/schulke-214/hkp/api/tasks"
 	"github.com/schulke-214/hkp/pkg/db"
@@ -19,7 +22,6 @@ func main() {
 	taskRouter.PATCH("/:id", tasks.UpdateByID)
 	taskRouter.DELETE("/:id", tasks.DeleteByID)
 
-	//
 	entriesRouter := taskRouter.Group("/:id/entries")
 
 	entriesRouter.GET("/", tasks.QueryAllEntries)
