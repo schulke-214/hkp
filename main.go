@@ -3,8 +3,10 @@ package main
 import (
 
 	// autoconfigure the environment
+
 	_ "github.com/schulke-214/hkp/pkg/util/env"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 
 	"github.com/schulke-214/hkp/api/tasks"
@@ -13,6 +15,7 @@ import (
 
 func main() {
 	router := gin.Default()
+	router.Use(cors.Default())
 
 	taskRouter := router.Group("/tasks")
 
@@ -24,9 +27,11 @@ func main() {
 
 	entriesRouter := taskRouter.Group("/:id/entries")
 
-	entriesRouter.GET("/", tasks.QueryAllEntries)
+	entriesRouter.GET("/", tasks.QueryAllEntriesByTask)
 	entriesRouter.POST("/", tasks.CreateEntry)
 	entriesRouter.DELETE("/:entry_id", tasks.DeleteEntry)
+
+	router.GET("/entries", tasks.QueryAllEntries)
 
 	router.Run(":8080")
 
