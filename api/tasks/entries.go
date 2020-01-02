@@ -47,10 +47,21 @@ func CreateEntry(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, entry)
 }
 
+func QueryAllEntries(ctx *gin.Context) {
+	var entries []models.TaskEntry
+
+	if err := db.Connection.Find(&entries).Error; err != nil {
+		ctx.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, entries)
+}
+
 // THIS IS NOT OK
 // U SHOULDNT HAVE TO QUERY ENTRIES FOR A TASK ID
 // @todo(max)
-func QueryAllEntries(ctx *gin.Context) {
+func QueryAllEntriesByTask(ctx *gin.Context) {
 	var entries []models.TaskEntry
 	taskID := ctx.Params.ByName("id")
 
