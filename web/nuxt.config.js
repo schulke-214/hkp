@@ -1,5 +1,12 @@
 import pkg from './package';
 
+const API_URL = (() => {
+	if (process.env.API_URL) return process.env.API_URL;
+
+	console.warn('using http://localhost:8080 as api url');
+	return 'http://localhost:8080/';
+})();
+
 export default {
 	mode: 'universal',
 
@@ -19,7 +26,11 @@ export default {
 	/*
 	 ** Customize the progress-bar color
 	 */
-	loading: { color: '#fff' },
+	loading: '~/components/ui/loading.vue',
+
+	env: {
+		API_URL
+	},
 
 	/*
 	 ** Global CSS
@@ -29,7 +40,7 @@ export default {
 	/*
 	 ** Plugins to load before mounting the App
 	 */
-	plugins: [],
+	plugins: ['~/plugins/api.js', '~/plugins/vee-validate.js'],
 
 	/*
 	 ** Nuxt.js modules
@@ -45,7 +56,7 @@ export default {
 	 ** Axios module configuration
 	 */
 	axios: {
-		// See https://github.com/nuxt-community/axios-module#options
+		baseURL: API_URL
 	},
 
 	/*
@@ -55,6 +66,7 @@ export default {
 		/*
 		 ** You can extend webpack config here
 		 */
-		extend(config, ctx) {}
+		extend(config, ctx) {},
+		transpile: ['vee-validate']
 	}
 };
