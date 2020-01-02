@@ -1,31 +1,39 @@
 <template>
 	<div>
-		<nav class="navbar header has-shadow is-primary" role="navigation" aria-label="main navigation">
-			<div class="navbar-brand">
-				<a class="navbar-item" href="/">
-					<img src="~assets/buefy.png" alt="Buefy" height="28" />
-				</a>
+		<b-navbar>
+			<template #brand>
+				<b-navbar-item tag="router-link" :to="{ path: '/' }">
+					<img
+						src="https://raw.githubusercontent.com/buefy/buefy/dev/static/img/buefy-logo.png"
+						alt="HKP"
+					/>
+				</b-navbar-item>
+				<b-navbar-item tag="div">{{ greeting }}</b-navbar-item>
+			</template>
 
-				<div class="navbar-burger">
-					<span />
-					<span />
-					<span />
-				</div>
-			</div>
-		</nav>
+			<template #end>
+				<b-navbar-item tag="div">
+					<div class="buttons">
+						<b-button type="is-primary" @click="modal.task = true">Create Task</b-button>
+						<b-button type="is-light" @click="modal.name = true">Set Name</b-button>
+					</div>
+				</b-navbar-item>
+			</template>
+		</b-navbar>
+
+		<b-modal :active.sync="modal.name">
+			<card title :header="false" :footer="false">
+				<name-form @submit="modal.name = false" />
+			</card>
+		</b-modal>
+
+		<b-modal :active.sync="modal.task">
+			<card title :header="false" :footer="false">
+				<task-form @submit="modal.task = false" />
+			</card>
+		</b-modal>
 
 		<section class="main-content columns">
-			<aside class="column is-2 section">
-				<p class="menu-label is-hidden-touch">General</p>
-				<ul class="menu-list">
-					<li v-for="(item, key) of items" :key="key">
-						<nuxt-link :to="item.to" exact-active-class="is-active">
-							<b-icon :icon="item.icon" /> {{ item.title }}
-						</nuxt-link>
-					</li>
-				</ul>
-			</aside>
-
 			<div class="container column is-10">
 				<nuxt />
 			</div>
@@ -34,17 +42,46 @@
 </template>
 
 <script>
-export default {};
+import Card from '~/components/ui/card';
+import NameForm from '~/components/core/name-form';
+import TaskForm from '~/components/core/task-form';
+
+export default {
+	name: 'layout',
+	components: {
+		Card,
+		NameForm,
+		TaskForm
+	},
+	data() {
+		return {
+			modal: {
+				name: this.$store.state.user.name.length === 0,
+				task: false
+			}
+		};
+	},
+	computed: {
+		greeting() {
+			const { name } = this.$store.state.user;
+
+			if (name) {
+				return `Hello, ${name}`;
+			}
+
+			return 'Please set a name...';
+		}
+	}
+};
 </script>
 
 <style lang="scss">
+// Import Bulma's core
 @import '~bulma/sass/utilities/_all';
 
 // Set your colors
-$primary: #8c67ef;
+$primary: #242259;
 $primary-invert: findColorInvert($primary);
-$twitter: #4099ff;
-$twitter-invert: findColorInvert($twitter);
 
 // Setup $colors to use as bulma classes (e.g. 'is-twitter')
 $colors: (
@@ -83,10 +120,6 @@ $colors: (
 	'danger': (
 		$danger,
 		$danger-invert
-	),
-	'twitter': (
-		$twitter,
-		$twitter-invert
 	)
 );
 
