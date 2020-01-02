@@ -12,8 +12,8 @@
 			<template #end>
 				<b-navbar-item tag="div">
 					<div class="buttons">
-						<b-button type="is-primary" @click="modal.task = true">Create Task</b-button>
-						<b-button type="is-light" @click="modal.name = true">Set Name</b-button>
+						<b-button type="is-primary" @click="modal.task = true">Aufgabe erstellen</b-button>
+						<b-button type="is-light" @click="modal.name = true">Namen setzen</b-button>
 					</div>
 				</b-navbar-item>
 			</template>
@@ -67,7 +67,7 @@ export default {
 				return `Hello, ${name}`;
 			}
 
-			return 'Please set a name...';
+			return 'Bitte setze einen namen...';
 		}
 	}
 };
