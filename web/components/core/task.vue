@@ -10,38 +10,24 @@
 		</template>
 
 		<template>
-			<!-- <ul>
-				<li
-					v-for="entry in entries"
-					:key="entry.id"
-					style="cursor: pointer;"
-					@click="removeById(entry.id)"
-				>{{ entry.user }}</li>
-			</ul>-->
-
 			<ul>
-				<li v-for="name in sortedNames" :key="name" v-text="name + ': ' + occurrence[name]" />
+				<li v-for="name in sortedNames" :key="name">
+					<span v-if="name !== next">{{ name + ': ' + occurrence[name] }}</span>
+					<span v-else style="color: red;">{{
+						name + ' (' + occurrence[name] + ') als nächstes dran.'
+					}}</span>
+				</li>
 			</ul>
-			<br />
-			<strong>Als Nächstes: {{ next }}</strong>
 		</template>
 
 		<template #footer>
 			<div class="buttons" style="width: 100%">
-				<b-button
-					type="is-primary"
-					icon-left="plus"
-					expanded
-					@click="add"
-					:disabled="!canAdd"
-				>Hinzufügen</b-button>
-				<b-button
-					type="is-danger"
-					icon-left="delete"
-					expanded
-					@click="removeFirst"
-					:disabled="!canRemoveFirst"
-				>Entfernen</b-button>
+				<b-button type="is-primary" icon-left="plus" expanded @click="add" :disabled="!canAdd"
+					>Hinzufügen</b-button
+				>
+				<b-button type="is-danger" icon-left="delete" expanded @click="removeFirst" :disabled="!canRemoveFirst"
+					>Entfernen</b-button
+				>
 			</div>
 		</template>
 	</card>
@@ -133,10 +119,6 @@ export default {
 			if (!match) return console.warn('ERR');
 
 			this.delete({ task: this.task.id, entry: match.id });
-		},
-
-		removeById(id) {
-			this.delete({ task: this.task.id, entry: id });
 		}
 	}
 };
